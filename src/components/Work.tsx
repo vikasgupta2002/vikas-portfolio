@@ -28,7 +28,6 @@ function WorkCard({
   onOpen: (p: Project) => void;
 }) {
   const previewRef = useRef<HTMLVideoElement>(null);
-  const [loaded, setLoaded] = useState(false);
 
   const playPreview = () => {
     const v = previewRef.current;
@@ -67,20 +66,19 @@ function WorkCard({
             project.orientation === "vertical" ? "aspect-[9/16]" : "aspect-video"
           }
         >
-          {/* Skeleton while the thumbnail loads */}
-          {!loaded && (
-            <div aria-hidden className="absolute inset-0 animate-pulse bg-white/[0.06]" />
-          )}
-          {/* Thumbnail */}
+          {/* Placeholder behind the thumbnail — visible only until the
+              image paints. The thumbnail itself is never hidden by JS:
+              it used to start at opacity-0 and only appear when React's
+              onLoad fired, and with server rendering that event can be
+              missed, leaving the card dark forever. */}
+          <div aria-hidden className="absolute inset-0 animate-pulse bg-white/[0.06]" />
+          {/* Thumbnail — a real frame from the video (taken at ~1s) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={project.thumbnail}
             alt={`Thumbnail for ${project.title}`}
             loading="lazy"
-            onLoad={() => setLoaded(true)}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
-              loaded ? "opacity-100" : "opacity-0"
-            }`}
+            className="absolute inset-0 h-full w-full object-cover"
           />
           {/* Muted hover-preview clip, fades in over the thumbnail */}
           <video
