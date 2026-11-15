@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { heroProject } from "@/data/projects";
-import Timecode from "./Timecode";
 
 /** Magnetic button — restrained: translates a few px toward the cursor, no scale. */
 function Magnetic({ children }: { children: React.ReactNode }) {
@@ -126,7 +125,6 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.95 }}
           className="mt-14 flex items-center justify-between border-t border-hairline pt-4 font-mono text-[11px] uppercase tracking-widest2 text-muted"
         >
-          <Timecode />
           <span className="hidden sm:inline">2.2+ yrs · 10 cuts</span>
           <a href="#work" className="flex items-center gap-2 text-muted transition-colors hover:text-accent" aria-label="Scroll to work">
             Scroll

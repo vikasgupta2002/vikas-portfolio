@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Timecode from "./Timecode";
 
 const LINKS = [
   { label: "Work", href: "#work" },
@@ -67,7 +66,6 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-4">
-          <Timecode className="hidden text-[11px] text-muted lg:inline" />
           <a
             href="#contact"
             className="group relative inline-flex items-center gap-2 border border-accent/70 px-4 py-2 font-mono text-[11px] uppercase tracking-widest2 text-accent transition-colors duration-150 hover:bg-accent hover:text-ink"

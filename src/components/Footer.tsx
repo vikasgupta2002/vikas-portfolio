@@ -1,7 +1,5 @@
 "use client";
 
-import Timecode from "./Timecode";
-
 /** Footer with the giant outlined wordmark + back-to-top. */
 export default function Footer() {
   return (
@@ -13,7 +11,6 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-hairline pt-6 font-mono text-[11px] uppercase tracking-widest2 text-muted sm:flex-row">
           <p>© Vikas Kumar Gupta</p>
-          <Timecode className="hidden md:inline" />
           <a
             href="#top"
             className="border border-hairline px-4 py-2 text-muted transition-colors hover:border-accent hover:text-accent"
