@@ -51,17 +51,36 @@ export default function CustomCursor() {
   const size = variant === "play" ? 76 : variant === "link" ? 44 : 12;
   return (
     <>
-      {/* Dot — follows instantly */}
+      {/* Dot — follows instantly.
+          z-[200] sits above EVERYTHING, including the video modal (z-95):
+          the modal used to cover the cursor while the native cursor was
+          already switched off, making it invisible inside the player.
+          The dark ring-shadow keeps the cyan dot visible on light
+          backgrounds too (e.g. bright video frames). */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[90] rounded-full bg-accent"
-        style={{ x, y, width: 6, height: 6, translateX: "-50%", translateY: "-50%" }}
+        className="pointer-events-none fixed left-0 top-0 z-[200] rounded-full bg-accent"
+        style={{
+          x,
+          y,
+          width: 6,
+          height: 6,
+          translateX: "-50%",
+          translateY: "-50%",
+          boxShadow: "0 0 0 1px rgba(5,5,5,0.65), 0 0 6px rgba(0,229,255,0.55)",
+        }}
       />
       {/* Ring — springs behind, becomes the PLAY circle */}
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[89] flex items-center justify-center rounded-full border border-accent/80"
-        style={{ x: rx, y: ry, translateX: "-50%", translateY: "-50%" }}
+        className="pointer-events-none fixed left-0 top-0 z-[199] flex items-center justify-center rounded-full border border-accent/80"
+        style={{
+          x: rx,
+          y: ry,
+          translateX: "-50%",
+          translateY: "-50%",
+          boxShadow: "0 0 0 1px rgba(5,5,5,0.35)",
+        }}
         animate={{
           width: size,
           height: size,
