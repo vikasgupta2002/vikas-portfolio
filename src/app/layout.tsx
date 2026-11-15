@@ -36,8 +36,7 @@ export const metadata: Metadata = {
     description:
       "Turning raw footage into stories that hold attention. Reels, YouTube, ads and motion graphics.",
     type: "website",
-    // PLACEHOLDER: set your live domain here once deployed, e.g.
-    // url: "https://vikasgupta.video",
+    url: "https://vikasgupta-editor.vercel.app",
     // images: [{ url: "/og.jpg", width: 1200, height: 630 }],
   },
   twitter: {
@@ -46,7 +45,7 @@ export const metadata: Metadata = {
     description:
       "Turning raw footage into stories that hold attention. Reels, YouTube, ads and motion graphics.",
   },
-  metadataBase: new URL("https://vikasgupta.video"), // PLACEHOLDER domain — update in README when you deploy
+  metadataBase: new URL("https://vikasgupta-editor.vercel.app"),
 };
 
 export default function RootLayout({
