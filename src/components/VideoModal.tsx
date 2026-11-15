@@ -86,13 +86,14 @@ export default function VideoModal({
             </button>
           </div>
 
-          {/* Player — 9:16 for vertical, 16:9 for horizontal */}
-          <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-4 md:px-12">
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+          {/* Player — 9:16 for vertical, 16:9 for horizontal.
+              Plain div on a black background, deliberately NOT animated:
+              the player used to re-mount with an opacity/scale fade on
+              every open and every Next/Prev, which flashed while the new
+              video was still loading. Switching is now instant and the
+              area stays black until the video paints. */}
+          <div className="flex min-h-0 flex-1 items-center justify-center bg-black px-4 pb-4 md:px-12">
+            <div
               className={
                 project.orientation === "vertical"
                   ? "h-full max-h-full aspect-[9/16] w-auto max-w-full"
@@ -107,9 +108,9 @@ export default function VideoModal({
                 controls
                 autoPlay
                 playsInline
-                preload="metadata"
+                preload="auto"
               />
-            </motion.div>
+            </div>
           </div>
 
           {/* Prev / next */}

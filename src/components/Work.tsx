@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { projects, type Project } from "@/data/projects";
 import { formatDuration } from "@/lib/format";
@@ -28,17 +28,35 @@ function WorkCard({
   onOpen: (p: Project) => void;
 }) {
   const previewRef = useRef<HTMLVideoElement>(null);
+  // True once the preview clip has a frame ready to show. The clip
+  // only fades in after this, so hovering never flashes to a black /
+  // unloaded frame while the video is still fetching.
+  const [previewReady, setPreviewReady] = useState(false);
+
+  useEffect(() => {
+    const v = previewRef.current;
+    if (v && v.readyState >= 2) setPreviewReady(true);
+  }, []);
 
   const playPreview = () => {
     const v = previewRef.current;
     if (!v || window.matchMedia("(hover: none)").matches) return;
-    v.play().catch(() => {});
+    if (v.readyState >= 2) {
+      v.play().catch(() => {});
+    } else {
+      // Not ready yet — start playing the moment the first frame
+      // exists instead of fading in an empty video element.
+      v.addEventListener("canplay", () => v.play().catch(() => {}), {
+        once: true,
+      });
+    }
   };
   const stopPreview = () => {
     const v = previewRef.current;
     if (!v) return;
+    // Pause only — do NOT seek back to 0. Seeking to the start forces
+    // the next hover to flash through an unbuffered first frame.
     v.pause();
-    v.currentTime = 0;
   };
 
   return (
@@ -71,7 +89,7 @@ function WorkCard({
               it used to start at opacity-0 and only appear when React's
               onLoad fired, and with server rendering that event can be
               missed, leaving the card dark forever. */}
-          <div aria-hidden className="absolute inset-0 animate-pulse bg-white/[0.06]" />
+          <div aria-hidden className="absolute inset-0 bg-white/[0.04]" />
           {/* Thumbnail — a real frame from the video (taken at ~1s) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -80,17 +98,25 @@ function WorkCard({
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          {/* Muted hover-preview clip, fades in over the thumbnail */}
+          {/* Muted hover-preview clip. preload="auto" so its first frame
+              is already decoded before anyone hovers — with "metadata"
+              it flashed black while fetching. It only fades in once a
+              frame is ready (see previewReady above). */}
           <video
             ref={previewRef}
             src={project.preview}
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
+            onCanPlay={() => setPreviewReady(true)}
             aria-hidden
             tabIndex={-1}
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+            className={`pointer-events-none absolute inset-0 h-full w-full bg-black object-cover opacity-0 transition-opacity duration-300 ${
+              previewReady
+                ? "group-hover:opacity-100 group-focus-within:opacity-100"
+                : ""
+            }`}
           />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
           <Corners />
