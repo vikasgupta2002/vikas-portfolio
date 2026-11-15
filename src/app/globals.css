@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Base ---------------------------------------------------- */
+:root {
+  --accent: #00e5ff;
+  /* Fontsource family names, wired to Tailwind's font-* utilities */
+  --font-space-grotesk: "Space Grotesk", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-jetbrains-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+html {
+  scroll-behavior: smooth;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+body {
+  background: #050505;
+  color: #f2f2ed;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+::selection {
+  background: #00e5ff;
+  color: #050505;
+}
+/* Thin, quiet scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border: 2px solid #050505;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00e5ff;
+}
+
+:focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: 3px;
+}
+
+/* --- Editor-inspired textures -------------------------------- */
+/* Subtle blueprint grid, used behind the hero / sections */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(242, 242, 237, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 242, 237, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+/* Light film grain — a tiny inline SVG turbulence, very low opacity */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Hairline helpers */
+.hairline-t {
+  border-top: 1px solid rgba(242, 242, 237, 0.12);
+}
+.hairline-b {
+  border-bottom: 1px solid rgba(242, 242, 237, 0.12);
+}
+
+/* Outlined display text (footer wordmark) */
+.text-outline {
+  -webkit-text-stroke: 1px rgba(242, 242, 237, 0.22);
+  color: transparent;
+}
+
+/* Hide the native cursor only when the custom cursor is active
+   (fine-pointer devices, no reduced-motion). The class is added
+   by <CustomCursor />. */
+.cursor-none-fine,
+.cursor-none-fine a,
+.cursor-none-fine button {
+  cursor: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

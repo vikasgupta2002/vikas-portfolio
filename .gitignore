@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+.next/
+out/
+*.log
+
+# Raw (uncompressed) source videos — large, never commit these
+/raw-videos/
+*.mov
+
+# OS / editor
+.DS_Store
+*.local

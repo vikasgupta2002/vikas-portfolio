@@ -1,0 +1,211 @@
+"use client";
+
+import { useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { categories, projects, type Category, type Project } from "@/data/projects";
+import { formatDuration } from "@/lib/format";
+import Reveal, { SectionLabel } from "./Reveal";
+import VideoModal from "./VideoModal";
+
+/** Frame-corner brackets on a video card — editor viewfinder cue. */
+function Corners() {
+  const base = "pointer-events-none absolute z-10 h-4 w-4 border-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100";
+  return (
+    <>
+      <span aria-hidden className={`${base} left-2 top-2 border-l-2 border-t-2`} />
+      <span aria-hidden className={`${base} right-2 top-2 border-r-2 border-t-2`} />
+      <span aria-hidden className={`${base} bottom-2 left-2 border-b-2 border-l-2`} />
+      <span aria-hidden className={`${base} bottom-2 right-2 border-b-2 border-r-2`} />
+    </>
+  );
+}
+
+function WorkCard({
+  project,
+  onOpen,
+}: {
+  project: Project;
+  onOpen: (p: Project) => void;
+}) {
+  const previewRef = useRef<HTMLVideoElement>(null);
+  const [loaded, setLoaded] = useState(false);
+
+  const playPreview = () => {
+    const v = previewRef.current;
+    if (!v || window.matchMedia("(hover: none)").matches) return;
+    v.play().catch(() => {});
+  };
+  const stopPreview = () => {
+    const v = previewRef.current;
+    if (!v) return;
+    v.pause();
+    v.currentTime = 0;
+  };
+
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.98 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className="group"
+    >
+      <button
+        type="button"
+        data-cursor="play"
+        onClick={() => onOpen(project)}
+        onMouseEnter={playPreview}
+        onMouseLeave={stopPreview}
+        onFocus={playPreview}
+        onBlur={stopPreview}
+        aria-label={`Play ${project.title}, ${project.category}, ${formatDuration(project.duration)}`}
+        className="relative block w-full overflow-hidden border border-hairline bg-white/[0.03] text-left focus-visible:outline-accent"
+      >
+        <div
+          className={
+            project.orientation === "vertical" ? "aspect-[9/16]" : "aspect-video"
+          }
+        >
+          {/* Skeleton while the thumbnail loads */}
+          {!loaded && (
+            <div aria-hidden className="absolute inset-0 animate-pulse bg-white/[0.06]" />
+          )}
+          {/* Thumbnail */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.thumbnail}
+            alt={`Thumbnail for ${project.title}`}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          {/* Muted hover-preview clip, fades in over the thumbnail */}
+          <video
+            ref={previewRef}
+            src={project.preview}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden
+            tabIndex={-1}
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+          />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+          <Corners />
+          {/* Duration + category badges */}
+          <span className="absolute left-3 top-3 bg-ink/80 px-2 py-1 font-mono text-[10px] tracking-widest text-paper">
+            {formatDuration(project.duration)}
+          </span>
+          <span className="absolute right-3 top-3 bg-accent px-2 py-1 font-mono text-[10px] font-medium tracking-widest text-ink">
+            {project.category}
+          </span>
+          {/* Centre play glyph, appears on hover/focus */}
+          <span
+            aria-hidden
+            className="absolute inset-0 grid place-items-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100"
+          >
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-accent/95">
+              <svg width="12" height="14" viewBox="0 0 10 12" fill="#050505" aria-hidden>
+                <path d="M0 0 L10 6 L0 12 Z" />
+              </svg>
+            </span>
+          </span>
+        </div>
+      </button>
+
+      <div className="mt-3 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-display text-base font-medium leading-snug">
+            {project.title}
+          </h3>
+          <p className="mt-1 font-mono text-[10px] uppercase tracking-widest2 text-muted">
+            {project.orientation === "vertical" ? "9:16" : "16:9"}
+            <span className="mx-2 text-white/25">·</span>
+            {project.duration}s
+          </p>
+        </div>
+        <span aria-hidden className="mt-1 font-mono text-xs text-accent">↗</span>
+      </div>
+    </motion.article>
+  );
+}
+
+export default function Work() {
+  const [filter, setFilter] = useState<"All" | Category>("All");
+  const [active, setActive] = useState<Project | null>(null);
+  const filtered =
+    filter === "All" ? projects : projects.filter((p) => p.category === filter);
+
+  return (
+    <section id="work" className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+      <Reveal>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <SectionLabel index="01" title="Selected Work" />
+            <h2 className="mt-4 font-display text-4xl font-bold tracking-tight md:text-6xl">
+              The Work<span className="text-accent">.</span>
+            </h2>
+            <p className="mt-3 max-w-md text-muted">
+              Ten cuts, all vertical reels. Hover to preview, click to watch full-screen.
+            </p>
+          </div>
+          <p className="font-mono text-[11px] uppercase tracking-widest2 text-muted" aria-live="polite">
+            {filtered.length} {filtered.length === 1 ? "project" : "projects"}
+            {filter !== "All" ? ` — ${filter}` : ""}
+          </p>
+        </div>
+      </Reveal>
+
+      {/* Filters */}
+      <Reveal delay={0.1}>
+        <div className="mt-10 flex flex-wrap gap-2" role="group" aria-label="Filter work by category">
+          {categories.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setFilter(c)}
+              aria-pressed={filter === c}
+              className={`border px-4 py-2 font-mono text-[11px] uppercase tracking-widest2 transition-colors duration-150 ${
+                filter === c
+                  ? "border-accent bg-accent text-ink"
+                  : "border-hairline text-muted hover:border-paper/40 hover:text-paper"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Grid — vertical reels in a tighter 9:16 grid */}
+      {filtered.length > 0 ? (
+        <motion.div layout className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((p) => (
+              <WorkCard key={p.id} project={p} onOpen={setActive} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      ) : (
+        <div className="mt-10 border border-dashed border-hairline p-10 text-center">
+          <p className="font-display text-lg">No {filter} projects yet.</p>
+          <p className="mt-2 text-sm text-muted">
+            Everything in the Drive folder so far is a vertical reel — add a {filter} cut
+            and it will show up here automatically (see README).
+          </p>
+        </div>
+      )}
+
+      <VideoModal
+        project={active}
+        projects={filtered.length > 0 ? filtered : projects}
+        onClose={() => setActive(null)}
+        onNavigate={setActive}
+      />
+    </section>
+  );
+}
