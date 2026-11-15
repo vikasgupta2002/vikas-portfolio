@@ -6,9 +6,13 @@ import type { Project } from "@/data/projects";
 import { formatDuration } from "@/lib/format";
 
 /**
- * Fullscreen modal player — native <video> with controls + autoplay.
+ * Fullscreen modal player — native <video> with controls.
  * Esc closes, ← / → step to previous / next project, focus starts
  * on the close button, and body scroll is locked while open.
+ * Playback starts from the poster: the video only plays once its
+ * first frame is ready (onCanPlay), so switching videos shows the
+ * next clip's thumbnail instantly instead of a black gap or a flash
+ * while the new file loads.
  */
 export default function VideoModal({
   project,
@@ -22,6 +26,7 @@ export default function VideoModal({
   onNavigate: (p: Project) => void;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const index = project ? projects.findIndex((p) => p.id === project.id) : -1;
 
   const prev = useCallback(() => {
@@ -102,13 +107,14 @@ export default function VideoModal({
             >
               <video
                 key={project.video}
+                ref={videoRef}
                 className="h-full w-full bg-black object-contain"
                 src={project.video}
                 poster={project.thumbnail}
                 controls
-                autoPlay
                 playsInline
                 preload="auto"
+                onCanPlay={() => videoRef.current?.play().catch(() => {})}
               />
             </div>
           </div>
