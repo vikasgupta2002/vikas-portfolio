@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { categories, projects, type Category, type Project } from "@/data/projects";
+import { motion } from "framer-motion";
+import { projects, type Project } from "@/data/projects";
 import { formatDuration } from "@/lib/format";
 import Reveal, { SectionLabel } from "./Reveal";
 import VideoModal from "./VideoModal";
@@ -135,10 +135,7 @@ function WorkCard({
 }
 
 export default function Work() {
-  const [filter, setFilter] = useState<"All" | Category>("All");
   const [active, setActive] = useState<Project | null>(null);
-  const filtered =
-    filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
     <section id="work" className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
@@ -153,56 +150,22 @@ export default function Work() {
               Ten cuts, all vertical reels. Hover to preview, click to watch full-screen.
             </p>
           </div>
-          <p className="font-mono text-[11px] uppercase tracking-widest2 text-muted" aria-live="polite">
-            {filtered.length} {filtered.length === 1 ? "project" : "projects"}
-            {filter !== "All" ? ` — ${filter}` : ""}
+          <p className="font-mono text-[11px] uppercase tracking-widest2 text-muted">
+            {projects.length} projects
           </p>
         </div>
       </Reveal>
 
-      {/* Filters */}
-      <Reveal delay={0.1}>
-        <div className="mt-10 flex flex-wrap gap-2" role="group" aria-label="Filter work by category">
-          {categories.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setFilter(c)}
-              aria-pressed={filter === c}
-              className={`border px-4 py-2 font-mono text-[11px] uppercase tracking-widest2 transition-colors duration-150 ${
-                filter === c
-                  ? "border-accent bg-accent text-ink"
-                  : "border-hairline text-muted hover:border-paper/40 hover:text-paper"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-      </Reveal>
-
-      {/* Grid — vertical reels in a tighter 9:16 grid */}
-      {filtered.length > 0 ? (
-        <motion.div layout className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p) => (
-              <WorkCard key={p.id} project={p} onOpen={setActive} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      ) : (
-        <div className="mt-10 border border-dashed border-hairline p-10 text-center">
-          <p className="font-display text-lg">No {filter} projects yet.</p>
-          <p className="mt-2 text-sm text-muted">
-            Everything in the Drive folder so far is a vertical reel — add a {filter} cut
-            and it will show up here automatically (see README).
-          </p>
-        </div>
-      )}
+      {/* Single grid — no filters, all 10 demos in one section */}
+      <motion.div layout className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {projects.map((p) => (
+          <WorkCard key={p.id} project={p} onOpen={setActive} />
+        ))}
+      </motion.div>
 
       <VideoModal
         project={active}
-        projects={filtered.length > 0 ? filtered : projects}
+        projects={projects}
         onClose={() => setActive(null)}
         onNavigate={setActive}
       />

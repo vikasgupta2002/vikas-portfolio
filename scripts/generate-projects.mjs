@@ -104,10 +104,11 @@ const header = `// -------------------------------------------------------------
 // To remove a video: delete its files from public/ and re-run the script.
 //
 // GUESSED TITLES / CATEGORIES — please correct these:
-// The Drive filenames were just "Video-26817.mp4" etc., so titles are
-// cleaned-up filenames and every category was guessed as "Reels"
-// (vertical + under 60s). Rename them to real project names and
-// re-categorise any that are actually YouTube / Ads / Motion Graphics.
+// Titles are "Demo 1" … "Demo 10" in file order, named at the owner's
+// request. Rename them to real project names; the script keeps
+// hand-edited titles for existing ids. Categories are all "Reels"
+// (vertical + under 60s); re-categorise any that are actually
+// YouTube / Ads / Motion Graphics.
 // ---------------------------------------------------------------------------
 
 export type Category =

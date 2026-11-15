@@ -67,7 +67,7 @@ export default function Hero() {
 
       <motion.div style={reduce ? undefined : { opacity: fade }} className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-10 pt-32 md:px-8">
         <p className="mb-6 font-mono text-[11px] uppercase tracking-widest2 text-accent">
-          Portfolio — 2026
+          Portfolio
           <span className="mx-3 text-white/30">/</span>
           <span className="text-muted">Premiere Pro · After Effects</span>
         </p>

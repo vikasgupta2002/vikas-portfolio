@@ -6,7 +6,7 @@ TypeScript + Tailwind CSS**, **Framer Motion** for animation and **Lenis** for
 smooth scroll. Vercel-ready.
 
 Live sections: Hero (with a muted looping video background + live timecode) →
-Work (filterable grid, hover previews, fullscreen modal player) → About →
+Work (single grid, hover previews, fullscreen modal player) → About →
 Services → Process → Contact → Footer.
 
 ## Quick start
@@ -92,14 +92,17 @@ the player, grid and modal all work unchanged with remote URLs. The
 from `src/data/projects.ts` (or re-run `npm run generate-projects`), rebuild.
 
 **Rename / re-categorise:** edit `title` and `category` directly in
-`src/data/projects.ts`. Valid categories: `Reels`, `YouTube`, `Ads`,
-`Motion Graphics` — the Work filters come from the `categories` array in
-the same file. Add a category there and the filter button appears.
+`src/data/projects.ts`. The titles are currently "Demo 1" … "Demo 10"
+in file order, as requested. Valid categories: `Reels`, `YouTube`, `Ads`,
+`Motion Graphics` — kept in the data file for future use; the Work
+section shows all projects in one grid with no filter buttons.
 
-> **Titles are guesses.** The Drive filenames were `Video-26817.mp4` etc.,
-> so the titles are just cleaned-up filenames and every category was
-> guessed as `Reels` (vertical + under 60s). Give each project its real
-> name in `src/data/projects.ts` — e.g. `"Skincare Brand Reel — Launch Cut"`.
+> **Titles are "Demo 1" … "Demo 10".** The Drive filenames were
+> `Video-26817.mp4` etc., so the videos were first given cleaned-up
+> filenames as titles and every category was guessed as `Reels`
+> (vertical + under 60s). At your request they are now named Demo 1–10
+> in file order (Demo 1 is the talking-head clip). Give any project its
+> real name in `src/data/projects.ts` whenever you like.
 
 ## Change the text and colours
 

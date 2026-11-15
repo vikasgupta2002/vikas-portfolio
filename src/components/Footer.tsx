@@ -12,7 +12,7 @@ export default function Footer() {
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-hairline pt-6 font-mono text-[11px] uppercase tracking-widest2 text-muted sm:flex-row">
-          <p>© 2026 Vikas Kumar Gupta</p>
+          <p>© Vikas Kumar Gupta</p>
           <Timecode className="hidden md:inline" />
           <a
             href="#top"

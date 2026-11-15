@@ -7,11 +7,10 @@
 // (or run process-videos.sh), then run `npm run generate-projects`.
 // To remove a video: delete its files from public/ and re-run the script.
 //
-// GUESSED TITLES / CATEGORIES — please correct these:
-// The Drive filenames were just "Video-26817.mp4" etc., so titles are
-// cleaned-up filenames and every category was guessed as "Reels"
-// (vertical + under 60s). Rename them to real project names and
-// re-categorise any that are actually YouTube / Ads / Motion Graphics.
+// TITLES — named "Demo 1" … "Demo 10" in file order at the owner's
+// request. Rename any entry to its real project name;
+// re-running generate-projects.mjs keeps hand-edited titles.
+// Categories are all "Reels" (every clip is vertical + under 60s).
 // ---------------------------------------------------------------------------
 
 export type Category =
@@ -34,7 +33,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "talking-head-vikas",
-    title: "Talking Head Vikas",
+    title: "Demo 1",
     category: "Reels",
     video: "/videos/talking-head-vikas.mp4",
     thumbnail: "/thumbs/talking-head-vikas.jpg",
@@ -44,7 +43,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-26817",
-    title: "Video 26817",
+    title: "Demo 2",
     category: "Reels",
     video: "/videos/video-26817.mp4",
     thumbnail: "/thumbs/video-26817.jpg",
@@ -54,7 +53,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-28204",
-    title: "Video 28204",
+    title: "Demo 3",
     category: "Reels",
     video: "/videos/video-28204.mp4",
     thumbnail: "/thumbs/video-28204.jpg",
@@ -64,7 +63,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-33455",
-    title: "Video 33455",
+    title: "Demo 4",
     category: "Reels",
     video: "/videos/video-33455.mp4",
     thumbnail: "/thumbs/video-33455.jpg",
@@ -74,7 +73,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-35918",
-    title: "Video 35918",
+    title: "Demo 5",
     category: "Reels",
     video: "/videos/video-35918.mp4",
     thumbnail: "/thumbs/video-35918.jpg",
@@ -84,7 +83,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-37082",
-    title: "Video 37082",
+    title: "Demo 6",
     category: "Reels",
     video: "/videos/video-37082.mp4",
     thumbnail: "/thumbs/video-37082.jpg",
@@ -94,7 +93,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-5771",
-    title: "Video 5771",
+    title: "Demo 7",
     category: "Reels",
     video: "/videos/video-5771.mp4",
     thumbnail: "/thumbs/video-5771.jpg",
@@ -104,7 +103,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-58620",
-    title: "Video 58620",
+    title: "Demo 8",
     category: "Reels",
     video: "/videos/video-58620.mp4",
     thumbnail: "/thumbs/video-58620.jpg",
@@ -114,7 +113,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-60549",
-    title: "Video 60549",
+    title: "Demo 9",
     category: "Reels",
     video: "/videos/video-60549.mp4",
     thumbnail: "/thumbs/video-60549.jpg",
@@ -124,7 +123,7 @@ export const projects: Project[] = [
   },
   {
     id: "video-89652",
-    title: "Video 89652",
+    title: "Demo 10",
     category: "Reels",
     video: "/videos/video-89652.mp4",
     thumbnail: "/thumbs/video-89652.jpg",
