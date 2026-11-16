@@ -5,9 +5,10 @@ import Reveal, { SectionLabel } from "./Reveal";
 
 const EMAIL = "vikasgupta123975@gmail.com";
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "";
-// PLACEHOLDER social links — replace the "#" hrefs with your real profiles.
+// Instagram is live (@magnificentsolution, confirmed 2026-11-15).
+// YouTube / LinkedIn / Behance are still "#" placeholders.
 const SOCIALS = [
-  { label: "Instagram", href: "#" },
+  { label: "Instagram", href: "https://www.instagram.com/magnificentsolution/" },
   { label: "YouTube", href: "#" },
   { label: "LinkedIn", href: "#" },
   { label: "Behance", href: "#" },
@@ -117,7 +118,7 @@ export default function Contact() {
                 <li key={s.label}>
                   <a
                     href={s.href}
-                    aria-label={`${s.label} (link not set yet)`}
+                    aria-label={s.href === "#" ? `${s.label} (link not set yet)` : s.label}
                     className="group font-display text-lg text-paper/85 transition-colors hover:text-accent"
                   >
                     {s.label}
@@ -127,8 +128,8 @@ export default function Contact() {
               ))}
             </ul>
             <p className="mt-4 font-mono text-[10px] text-white/30">
-              PLACEHOLDER — social links are “#” until you add your real profiles
-              in src/components/Contact.tsx.
+              Instagram is linked — YouTube, LinkedIn and Behance are still
+              placeholders until you add those profiles.
             </p>
           </Reveal>
 
