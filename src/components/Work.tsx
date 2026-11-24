@@ -171,7 +171,7 @@ export default function Work() {
               The Work<span className="text-accent">.</span>
             </h2>
             <p className="mt-3 max-w-md text-muted">
-              Ten cuts, all vertical reels. Hover to preview, click to watch full-screen.
+              Eight cuts, all vertical reels. Hover to preview, click to watch full-screen.
             </p>
           </div>
           <p className="font-mono text-[11px] uppercase tracking-widest2 text-muted">
@@ -181,7 +181,7 @@ export default function Work() {
       </Reveal>
 
       {/* Single grid — no filters, all 8 demos in one section */}
-      <motion.div layout className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <motion.div layout className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
         {projects.map((p) => (
           <WorkCard key={p.id} project={p} onOpen={setActive} />
         ))}
