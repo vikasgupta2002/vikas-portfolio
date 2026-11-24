@@ -159,9 +159,8 @@ export const categories: ("All" | Category)[] = [
   "Motion Graphics",
 ];
 
-// Hero background — the talking-head clip if present, else the first project.
-export const heroProject =
-  projects.find((p) => p.id === "talking-head-vikas") ?? projects[0];
+// Hero background — the first project in the grid.
+export const heroProject = projects[0];
 `
 );
 

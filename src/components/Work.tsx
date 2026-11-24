@@ -180,7 +180,7 @@ export default function Work() {
         </div>
       </Reveal>
 
-      {/* Single grid — no filters, all 10 demos in one section */}
+      {/* Single grid — no filters, all 8 demos in one section */}
       <motion.div layout className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {projects.map((p) => (
           <WorkCard key={p.id} project={p} onOpen={setActive} />

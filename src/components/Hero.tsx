@@ -45,7 +45,7 @@ export default function Hero() {
       className="bg-grid grain relative flex min-h-svh flex-col overflow-hidden"
       aria-label="Introduction"
     >
-      {/* Muted looping background video — the talking-head clip */}
+      {/* Muted looping background video — the first project clip */}
       {heroProject && (
         <motion.div style={reduce ? undefined : { y: bgY }} className="absolute inset-0" aria-hidden>
           <video
@@ -125,7 +125,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.95 }}
           className="mt-14 flex items-center justify-between border-t border-hairline pt-4 font-mono text-[11px] uppercase tracking-widest2 text-muted"
         >
-          <span className="hidden sm:inline">2.2+ yrs · 10 cuts</span>
+          <span className="hidden sm:inline">2.2+ yrs · 8 cuts</span>
           <a href="#work" className="flex items-center gap-2 text-muted transition-colors hover:text-accent" aria-label="Scroll to work">
             Scroll
             <span aria-hidden className="inline-block animate-bounce">↓</span>
